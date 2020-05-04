@@ -38,7 +38,7 @@ request
 response
 
 ```json
-"user": {
+{
     "id": 4,
     "uid": "asasigure_ice",
     "name": "サウス",
