@@ -49,7 +49,8 @@ class KipUsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = KipUser::find($id);
+        return $user;
     }
 
     /**
