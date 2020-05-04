@@ -18,4 +18,8 @@ Route::middleware(['cors'])->group(function () {
     });
     
     Route::resource('kip_users', 'KipUsersController');
+    Route::resource('posts', 'PostsController');
+    Route::resource('likes', 'LikesController');
+    Route::resource('usefuls', 'UsefulsController');
+    Route::resource('categories', 'CategoriesController');
 });

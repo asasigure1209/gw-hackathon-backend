@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\KipUser;
-
-class KipUsersController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,6 @@ class KipUsersController extends Controller
     public function index()
     {
         //
-        $users = KipUser::all();
-        return $users;
     }
 
     /**
@@ -38,22 +34,7 @@ class KipUsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new KipUser;
-        $user->uid = $request->uid;
-        $user->name = $request->name;
-        $user->status = "login";
-        $user->password = $request->password;
-        $user->image_path = $request->image;
-        $user->save();
-
-        return json_encode(
-            array(
-                "id" => $user->id,
-                "uid" => $user->uid,
-                "name" => $user->name,
-                "image" => $user->image_path,
-            )
-        );
+        //
     }
 
     /**
@@ -64,8 +45,7 @@ class KipUsersController extends Controller
      */
     public function show($id)
     {
-        $user = KipUser::find($id);
-        return $user;
+        //
     }
 
     /**
