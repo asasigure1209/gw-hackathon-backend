@@ -1,4 +1,4 @@
-# [GET] /users
+# [GET] /kip_users
 
 response
 ```json
@@ -12,7 +12,7 @@ response
 ]
 ```
 
-# [GET] /users/{id}
+# [GET] /kip_users/{id}
 
 response
 ```json
@@ -24,7 +24,7 @@ response
 }
 ```
 
-# [POST] /users
+# [POST] /kip_users
 
 request
 
@@ -46,7 +46,7 @@ response
 }
 ```
 
-# [DELETE] /users/{id}
+# [DELETE] /kip_users/{id}
 
 ステータスコードだけ返せばいい
 
