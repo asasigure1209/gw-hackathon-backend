@@ -11,7 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< HEAD
         $this->call(CategoriesTableSeeder::class);
+=======
+        $this->call(CategoryTableSeeder::class);
+>>>>>>> yattemita
         $this->call(KipUsersTableSeeder::class);
         
     }
