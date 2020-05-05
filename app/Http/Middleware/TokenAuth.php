@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use App\KipUser;
+
+class TokenAuth
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if ($request->is("login")) {
+            return $next($request);
+        }
+
+        $token = request()->bearerToken();
+        $user = KipUser::where("token", $token)->first();
+        if ($token && $user) {
+            return $next($request);
+        } else {
+            abort(401);
+        }
+    }
+}
