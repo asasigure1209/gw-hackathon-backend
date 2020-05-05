@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Category;
+
 class CategoriesController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return $categories;//
     }
 
     /**
@@ -34,7 +37,18 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categories = new Category;
+        $categories->name = $request->name;
+        $categories->image_path = $request->image;
+        $categories->save();
+
+        return json_encode(
+            array(
+                "id" => $categories->id,
+                "name" => $categories->name,
+                "image_path" => $categories->image_path,
+            )
+        );//
     }
 
     /**
@@ -45,7 +59,8 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = Category::find($id);
+        return $categories;//
     }
 
     /**
@@ -79,6 +94,13 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categories = Category::find($id);
+        if($categories!=NULL){
+            $categories->delete();
+            return response('ステータスコード200', 200);
+        }
+        else{
+            return response('ステータスコード400', 400);
+        }
     }
 }
