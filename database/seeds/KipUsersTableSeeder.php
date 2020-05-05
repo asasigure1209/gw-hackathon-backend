@@ -15,14 +15,14 @@ class KipUsersTableSeeder extends Seeder
         DB::table("kip_users")->insert([
             [
                 'uid' => 'asasigure_ice',
-                'status' => 'logout',
+                'token' => '',
                 'name' => 'あさしぐれ',
                 'password' => 'asasigure',
                 "image_path" => ''
             ],
             [
                 'uid' => 'minami1209',
-                'status' => 'logout',
+                'token' => '',
                 'name' => 'minami',
                 'password' => 'minami',
                 "image_path" => ''

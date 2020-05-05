@@ -16,7 +16,7 @@ class CreateKipUsersTable extends Migration
         Schema::create('kip_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('uid')->unique();
-            $table->string('status');
+            $table->string('token');
             $table->string('name');
             $table->string('password');
             $table->string('image_path');

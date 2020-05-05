@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\KipUser;
 
@@ -42,7 +43,7 @@ class KipUsersController extends Controller
         $user = new KipUser;
         $user->uid = $request->uid;
         $user->name = $request->name;
-        $user->status = "login";
+        $user->token = Str::random();
         $user->password = $request->password;
         $user->image_path = $request->image;
         $user->save();
@@ -52,6 +53,7 @@ class KipUsersController extends Controller
             array(
                 "id" => $user->id,
                 "uid" => $user->uid,
+                "token" => $user->token,
                 "name" => $user->name,
                 "image" => $user->image_path,
             )
@@ -69,11 +71,12 @@ class KipUsersController extends Controller
         $user = KipUser::find($id);
 
         return json_encode(
-            array("id" => $user->id,
-                  "uid" => $user->uid,
-                  "name" => $user->name,
-                  "image" => $user->image_path,
-                  )
+            array(
+                "id" => $user->id,
+                "uid" => $user->uid,
+                "name" => $user->name,
+                "image" => $user->image_path,
+            )
         );
     }
 
