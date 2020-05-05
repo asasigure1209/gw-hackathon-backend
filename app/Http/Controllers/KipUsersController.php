@@ -124,4 +124,40 @@ class KipUsersController extends Controller
         }
 
     }
+
+    public function login(Request $request)
+    {
+        $uid = $request->uid;
+        $password = $request->password;
+        $user = KipUser::where("uid", $uid)->first();
+        if ($user && $password == $user->password) {
+            $token = Str::random();
+            $user->token = $token;
+            $user->save();
+            return [
+                "user" => [
+                    "id" => $user->id,
+                    "uid" => $user->uid,
+                    "token" => $user->token,
+                    "name" => $user->name,
+                    "image" => $user->image_path,
+                ]
+            ];
+        }else{
+            return response(401);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $token = $request->bearerToken();
+        $user = KipUser::where("token", $token)->first();
+        if ($token && $user) {
+            $user->token = "";
+            $user->save();
+            return response(200);
+        }else{
+            return response(401);
+        }
+    }
 }
