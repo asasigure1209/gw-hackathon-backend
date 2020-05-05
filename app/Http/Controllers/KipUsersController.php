@@ -15,8 +15,9 @@ class KipUsersController extends Controller
      */
     public function index()
     {
-        //
-        $users = KipUser::all();
+        // 必要なものだけSELECTする
+        $users = KipUser::select("id", "uid", "name", "image_path")->get();
+
         return $users;
     }
 
@@ -46,6 +47,7 @@ class KipUsersController extends Controller
         $user->image_path = $request->image;
         $user->save();
 
+        // jsonに変換
         return json_encode(
             array(
                 "id" => $user->id,
@@ -65,7 +67,14 @@ class KipUsersController extends Controller
     public function show($id)
     {
         $user = KipUser::find($id);
-        return $user;
+
+        return json_encode(
+            array("id" => $user->id,
+                  "uid" => $user->uid,
+                  "name" => $user->name,
+                  "image" => $user->image_path,
+                  )
+        );
     }
 
     /**
@@ -99,6 +108,17 @@ class KipUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = KipUser::find($id);
+
+        if($user==NULL)
+        {
+            return response("ステータスコード400", 400);
+        }
+        else
+        {
+            //KipUser::while("id", $id)->delete();
+            return response("ステータスコード200", 200);
+        }
+
     }
 }
