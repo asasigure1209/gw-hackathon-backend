@@ -24,10 +24,42 @@ class PostsController extends Controller
 
     public function index(Request $request)
     {
-        $posts = Post::orderBy($request->type, 'asc')->
-        where('category_id',$request->category)->
-        offset($request->offset)->
-        limit($request->limit)->get();
+        $category = Null;
+
+        if ($request->category != Null && $request->category != 'all') {
+            $category = Category::where("name", $request->category)
+            ->limit(1)
+            ->get()[0];
+        }
+        
+        $posts = Null;
+        $offset = 0;
+        $limit = 1;
+
+        if ($request->offset != Null) {
+            $offset = $request->offset;
+        }
+
+        if ($request->limit != Null) {
+            $limit = $request->limit;
+        }
+
+        if ($category != Null) {
+            $posts = Post::where('category_id', $category->id)
+                ->offset($offset)
+                ->limit($limit)
+                ->get();
+        } else {
+            $posts = Post::orderBy("id", 'DESC')
+                ->offset($offset)
+                ->limit($limit)
+                ->get();
+        }
+        
+        // $posts = Post::orderBy('$request->type', 'asc')->
+        // where('category_id',$request->category)->
+        // offset($request->offset)->
+        // limit($request->limit)->get();
         // jsonに変換
         $cun=0;
         if(empty($posts[$cun])){

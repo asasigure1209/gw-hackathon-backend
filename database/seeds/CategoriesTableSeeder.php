@@ -17,9 +17,17 @@ class CategoriesTableSeeder extends Seeder
                 'image_path' => 'aaa'
             ],
             [
-                'name' => 'communication',
+                'name' => 'mylife',
                 'image_path' => 'aaa'
             ],
+            [
+                'name' => 'communication',
+                'image_path' => 'cccc'
+            ],
+            [
+                'name' => 'etc',
+                'image_path' => 'afse'
+            ]
         ]);
     }
 }
