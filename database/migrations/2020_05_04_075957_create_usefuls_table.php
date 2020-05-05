@@ -17,7 +17,6 @@ class CreateUsefulsTable extends Migration
             $table->increments('id');
             $table->string('user_id');
             $table->string('post_id');
-            $table->string('image_path');
             $table->timestamps();
         });
     }
