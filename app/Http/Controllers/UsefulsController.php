@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Useful;
+
 class UsefulsController extends Controller
 {
     /**
@@ -13,7 +15,9 @@ class UsefulsController extends Controller
      */
     public function index()
     {
-        //
+        $usefuls = Useful::all();
+        
+        return $usefuls;
     }
 
     /**
@@ -34,7 +38,21 @@ class UsefulsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $useful = new Useful;
+        $useful->post_id = $request->post_id;
+        $useful->user_id = $request->user_id;
+        $useful->save();
+
+        // jsonに変換
+        return json_encode(
+            array(
+                "id" => $useful->id,
+                "post_id" => $useful->post_id,
+                "user_id" => $useful->user_id,
+                "created_at" => $useful->created_at,
+            )
+        ); 
+        
     }
 
     /**
@@ -45,7 +63,16 @@ class UsefulsController extends Controller
      */
     public function show($id)
     {
-        //
+        $useful = Useful::find($id);
+
+        return json_encode(
+            array("id" => $useful->id,
+                  "post_id" => $useful->post_id,
+                  "user_id" => $useful->user_id,
+                  "created_at" => $useful->created_at,
+            )
+
+        );
     }
 
     /**
@@ -79,6 +106,16 @@ class UsefulsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $useful = Useful::find($id);
+
+        if(empty($useful))
+        {
+            return response("ステータスコード400", 400);
+        }
+        else
+        {
+            Useful::destroy($id);
+            return response("ステータスコード200", 200);
+        }
     }
 }
