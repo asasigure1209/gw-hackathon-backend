@@ -2,11 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-<<<<<<< HEAD
 class CategoriesTableSeeder extends Seeder
-=======
-class CategoriesableSeeder extends Seeder
->>>>>>> yattemita
 {
     /**
      * Run the database seeds.
@@ -15,7 +11,6 @@ class CategoriesableSeeder extends Seeder
      */
     public function run()
     {
-<<<<<<< HEAD
         DB::table("categories")->insert([
             [
                 'name' => 'business',
@@ -29,19 +24,3 @@ class CategoriesableSeeder extends Seeder
     }
 }
 
-=======
-        //
-        DB::table("categories")->insert([
-            [
-                'name' => 'business_skills',
-                "image_path" => 'aaa'
-            ],
-            [
-                'name' => 'communication',
-                "image_path" => 'aaa'
-            ],
-        ]);
-        //
-    }
-}
->>>>>>> yattemita
