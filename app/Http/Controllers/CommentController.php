@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Like;
+use App\Comment;
 
-class LikesController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class LikesController extends Controller
      */
     public function index()
     {
-        $like = Like::all();
-        return $like;//
+        $comments = Comment::all();
+
+        return $comments;
     }
 
     /**
@@ -37,18 +38,20 @@ class LikesController extends Controller
      */
     public function store(Request $request)
     {
-        $like = new Like;
-        $like->user_id = $request->user_id;
-        $like->post_id = $request->post_id;
-        $like->save();
-
+        $comment = new Comment;
+        $comment->user_id = $request->user_id;
+        $comment->post_id = $request->post_id;
+        $comment->content = $request->content;
+        $comment->save();
+  
+        // jsonに変換
         return json_encode(
-            array(
-                "id" => $like->id,
-                "post_id" => $like->name,
-                "post_id" => $like->post_id,
-            )
-        );//
+            array("id" => $comment->id,
+                  "user_id" => $comment->user_id,
+                  "post_id" => $comment->post_id,
+                  "text" => $comment->content,
+                  )
+        );
     }
 
     /**
@@ -59,8 +62,17 @@ class LikesController extends Controller
      */
     public function show($id)
     {
-        $like = Like::find($id);
-        return $like;//
+        $comment = Comment::find($id);
+
+        // jsonに変換
+        return json_encode(
+            array("id" => $comment->id,
+                  "user_id" => $comment->user_id,
+                  "post_id" => $comment->post_id,
+                  "text" => $comment->content,
+                  )
+        );
+
     }
 
     /**
@@ -94,13 +106,16 @@ class LikesController extends Controller
      */
     public function destroy($id)
     {
-        $like = Like::find($id);
-        if($like!=NULL){
-            $like->delete();
-            return response('ステータスコード200', 200);
+        $comment = Comment::find($id);
+
+        if(empty($comment))
+        {
+            return response("ステータスコード400", 400);
         }
-        else{
-            return response('ステータスコード400', 400);
+        else
+        {
+            Comment::destroy($id);
+            return response("ステータスコード200", 200);
         }
     }
 }

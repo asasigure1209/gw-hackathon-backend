@@ -25,4 +25,5 @@ Route::middleware(['cors', 'token.auth'])->group(function () {
     Route::resource('likes', 'LikesController');
     Route::resource('usefuls', 'UsefulsController');
     Route::resource('categories', 'CategoriesController');
+    Route::resource('comments', 'CommentController');
 });
