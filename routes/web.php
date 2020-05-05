@@ -22,5 +22,4 @@ Route::middleware(['cors'])->group(function () {
     Route::resource('likes', 'LikesController');
     Route::resource('usefuls', 'UsefulsController');
     Route::resource('categories', 'CategoriesController');
-    Route::resource('articles', 'ArticlesController');
 });

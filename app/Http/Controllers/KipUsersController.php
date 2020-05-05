@@ -116,7 +116,7 @@ class KipUsersController extends Controller
         }
         else
         {
-            //KipUser::while("id", $id)->delete();
+            $user->delete();
             return response("ステータスコード200", 200);
         }
 
