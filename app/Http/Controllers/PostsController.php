@@ -35,6 +35,7 @@ class PostsController extends Controller
         $posts = Null;
         $offset = 0;
         $limit = 1;
+        $type = 'new';
 
         if ($request->offset != Null) {
             $offset = $request->offset;
@@ -44,13 +45,20 @@ class PostsController extends Controller
             $limit = $request->limit;
         }
 
+        if ($request->type != Null) {
+            $type = $request->type;
+        }
+
+        //TODO: Typeを使う奴も追加する
+
         if ($category != Null) {
             $posts = Post::where('category_id', $category->id)
+                ->orderBy('created_at','DESC')
                 ->offset($offset)
                 ->limit($limit)
                 ->get();
         } else {
-            $posts = Post::orderBy("id", 'DESC')
+            $posts = Post::orderBy('created_at', 'DESC')
                 ->offset($offset)
                 ->limit($limit)
                 ->get();
