@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Post;
-
 use App\Category;
+use App\Useful;
 use App\KipUser;
 use App\Like;
-use App\Useful;
 
 
 class PostsController extends Controller
@@ -73,7 +72,7 @@ class PostsController extends Controller
                     ->limit($limit)
                     ->get();
             } else {
-                $posts = Post::withCount('useful')
+                $posts = Post::withCount('usefuls')
                     ->orderBy('usefuls_count', "desc")
                     ->offset($offset)
                     ->limit($limit)

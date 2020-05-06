@@ -8,6 +8,6 @@ class Post extends Model
 {
     public function usefuls()
     {
-        return $this->hasMany('Useful');
+        return $this->hasMany('App\Useful');
     }
 }
