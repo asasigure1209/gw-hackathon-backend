@@ -16,7 +16,11 @@ class TokenAuth
      */
     public function handle($request, Closure $next)
     {
-        if ($request->is("login") && $request->isMethod("post") || $request->is("kip_users") && $request->isMethod("post")) {
+        if (
+            $request->is("login") && $request->isMethod("post") || 
+            $request->is("kip_users") && $request->isMethod("post") ||
+            $request->is("logout") && $request->isMethod("post")
+        ) {
             return $next($request);
         }
 

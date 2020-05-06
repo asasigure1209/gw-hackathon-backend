@@ -52,16 +52,33 @@ class PostsController extends Controller
         //TODO: Typeを使う奴も追加する
 
         if ($category != Null) {
-            $posts = Post::where('category_id', $category->id)
+            if ($type == "new") {
+                $posts = Post::where('category_id', $category->id)
                 ->orderBy('created_at','DESC')
                 ->offset($offset)
                 ->limit($limit)
                 ->get();
+            } else {
+                $posts = Post::where('category_id', $category->id)
+                    ->withCount('usefuls')
+                    ->orderBy('usefuls_count', "desc")
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->get();
+            }
         } else {
-            $posts = Post::orderBy('created_at', 'DESC')
-                ->offset($offset)
-                ->limit($limit)
-                ->get();
+            if ($type == "new") {
+                $posts = Post::orderBy('created_at', 'DESC')
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->get();
+            } else {
+                $posts = Post::withCount('useful')
+                    ->orderBy('usefuls_count', "desc")
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->get();
+            }
         }
         
         // $posts = Post::orderBy('$request->type', 'asc')->
@@ -78,8 +95,9 @@ class PostsController extends Controller
             
             while(!empty($posts[$cun])){
                 $user = KipUser::find($posts[$cun]->user_id);
-                $like = Like::count($posts[$cun]->id);
-                $useful = Useful::count($posts[$cun]->id);
+                $like = Like::where('post_id', $posts[$cun]->id)->count();
+                $useful = Useful::where('post_id', $posts[$cun]->id)->count();
+                $category = Category::find($posts[$cun]->category_id);
                 $outlines[]=
                     array(
                         "id" => $posts[$cun]->id,
@@ -90,7 +108,7 @@ class PostsController extends Controller
                         ),
                         "like_users" => $like,
                         "useful_count" => $useful,
-                        "category" => $posts[$cun]->category_id,
+                        "category" => $category->name,
                         "content" => $posts[$cun]->content,
                         "created_at" => $posts[$cun]->created_at,
                         "update_at" => $posts[$cun]->update_at,
@@ -120,10 +138,12 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $user = KipUser::find($request->user_id);
+        $category = Category::where("name", $request->category)
+            ->get()[0];
         $post = new Post;
         $post->user_id = $request->user_id;
         $post->content = $request->content;
-        $post->category_id = $request->category_id;
+        $post->category_id = $category->id;
         $post->save();
         $like = Like::count($post->id);
         $useful = Useful::count($post->id);
