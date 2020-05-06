@@ -263,4 +263,18 @@ class PostsController extends Controller
             return response('ステータスコード400', 400);
         }//
     }
+
+    public function count(Request $request)
+    {
+        $count = 0;
+
+        if ($request->category == Null || $request->category == "all") {
+            $count = Post::all()->count();
+        } else {
+            $category = Category::where("name", $request->category)->get()[0];
+            $count = Post::where("category_id", $category->id)->count();
+        }
+
+        return [ "count" => $count];
+    }
 }

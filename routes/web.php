@@ -20,6 +20,8 @@ Route::middleware(['cors', 'token.auth'])->group(function () {
     Route::post('login', 'KipUsersController@login');
     Route::post('logout', 'KipUsersController@logout');
     
+    Route::get('posts_count', 'PostsController@count');
+
     Route::resource('kip_users', 'KipUsersController');
     Route::resource('posts', 'PostsController');
     Route::resource('likes', 'LikesController');
