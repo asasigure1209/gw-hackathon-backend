@@ -16,8 +16,9 @@ class TokenAuth
      */
     public function handle($request, Closure $next)
     {
+        // ログイン・ログアウト・サインアウトは素通し
         if (
-            $request->is("login") && $request->isMethod("post") || 
+            $request->is("login") && $request->isMethod("post") ||
             $request->is("kip_users") && $request->isMethod("post") ||
             $request->is("logout") && $request->isMethod("post")
         ) {
@@ -26,10 +27,18 @@ class TokenAuth
 
         $token = request()->bearerToken();
         $user = KipUser::where("token", $token)->first();
+
+        // 変更を加えるメソッドは本人確認をする
         if ($token && $user) {
-            return $next($request);
-        } else {
-            abort(401);
+            if ($request->isMethod("get")) {
+                return $next($request);
+            }
+
+            if ($user->id == $request->user_id) {
+                return $next($request);
+            }
         }
+            
+        return abort(401);
     }
 }
