@@ -1,6 +1,48 @@
 # backend備忘録
 
+## 環境構築
+composer install
+```
+brew install composer
+```
+
+```
+composer -v
+```
+
+```
+composer global require "laravel/installer"
+```
+多分ZIPがないって怒られるのでPHP更新
+```
+brew update
+brew install php@7.4
+brew link php@7.4
+```
+もう一度実行
+```
+composer global require laravel/installer
+```
+
+## DB新設・更新
+```
+php artisan migrate:refresh
+```
+```
+php artisan migrate
+```
+```
+php artisan db:seed
+```
+
+
 ## 開発環境の立ち上げ
+gw-hackthon-backendへ移動
+
+```
+composer install
+```
+
 ```bash
 php artisan serve
 ```
